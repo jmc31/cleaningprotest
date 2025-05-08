@@ -1,9 +1,12 @@
+
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md">
     <h2 class="text-2xl font-semibold mb-4">My Bookings</h2>
     <table class="w-full table-auto border">
         <thead>
             <tr>
                 <th class="border p-2">Name</th>
+                <th class="border p-2">Email</th>
+                <th class="border p-2">Type of Cleaning</th>
                 <th class="border p-2">Date</th>
                 <th class="border p-2">Time</th>
                 <th class="border p-2">Status</th>
@@ -14,6 +17,8 @@
             @foreach($bookings as $booking)
             <tr>
                 <td class="border p-2">{{ $booking->name }}</td>
+                <td class="border p-2">{{ $booking->email }}</td>
+                <td class="border p-2">{{ $booking->type_of_cleaning }}</td>
                 <td class="border p-2">{{ $booking->date }}</td>
                 <td class="border p-2">{{ $booking->time }}</td>
                 <td class="border p-2">
