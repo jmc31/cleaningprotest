@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\{BookingCreate, BookingEdit, BookingView, BookingPayment};
 use App\Livewire\GenerateReport;
+use App\Livewire\Transactions;
 use App\Http\Controllers\BookingController;
 
 Route::get('/', function () {
@@ -33,5 +34,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/download-report', [BookingController::class, 'downloadReport'])->name('download.report');
 
 Route::get('/generate-report', GenerateReport::class)->name('generate.report');
-
+Route::get('/transactions', Transactions::class)->name('transactions');
 require __DIR__.'/auth.php';

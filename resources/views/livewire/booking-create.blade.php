@@ -8,7 +8,7 @@
             <select wire:model="type_of_cleaning" class="w-full border rounded p-2" required>
                 <option value="">-- Select Type of Cleaning --</option>
                 <option value="standard">Standard</option>
-                <option value="deep">Deep Cleaning</option>
+                <option value="deep cleaning">Deep Cleaning</option>
                 <option value="move-out">Move-Out</option>
             </select>
 
@@ -17,9 +17,9 @@
 
             <select wire:model="payment_method" class="w-full border rounded p-2" required>
                 <option value="">-- Select Payment Method --</option>
-                <option value="cash">Cash</option>
-                <option value="gcash">GCash</option>
-                <option value="paypal">PayPal</option>
+                <option value="Cash">Cash</option>
+                <option value="Gcash">GCash</option>
+                <option value="Paypal">PayPal</option>
             </select>
 
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">

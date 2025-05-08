@@ -8,8 +8,21 @@
         <p><strong>Type of Cleaning:</strong> {{ ucfirst($booking->type_of_cleaning) }}</p>
         <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($booking->date)->format('F j, Y') }}</p>
         <p><strong>Time:</strong> {{ \Carbon\Carbon::parse($booking->time)->format('g:i A') }}</p>
-        <p><strong>Payment Method</strong> {{ ucfirst($booking->payment_method) }}</p>
-        <p class="text-lg mt-4"><strong>Total Amount:</strong> $100.00</p>
+        <p><strong>Payment Method:</strong> {{ ucfirst($booking->payment_method) }}</p>
+
+        @php
+            // Normalize the cleaning type and define prices
+            $type = strtolower(trim($booking->type_of_cleaning));
+            $prices = [
+                'standard' => 800,
+                'deep cleaning' => 1500,
+                'move-in/move-out' => 2500,
+            ];
+            // Get the price or default to 0
+            $price = $prices[$type] ?? 0;
+        @endphp
+
+        <p class="text-lg mt-4"><strong>Total Amount:</strong> ₱{{ number_format($price, 2) }}</p>
     </div>
 
     <button wire:click="payNow" class="mt-4 bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">

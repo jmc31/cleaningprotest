@@ -13,6 +13,7 @@
                     <th class="border px-4 py-2 text-left">Address</th>
                     <th class="border px-4 py-2 text-left">Email</th>
                     <th class="border px-4 py-2 text-left">Type of Cleaning</th>
+                    <th class="border px-4 py-2 text-left">Price</th> <!-- New column for price -->
                     <th class="border px-4 py-2 text-left">Book Date</th>
                     <th class="border px-4 py-2 text-left">Time</th>
                     <th class="border px-4 py-2 text-left">Payment Method</th>
@@ -21,23 +22,31 @@
             </thead>
             <tbody class="text-gray-700">
                 @forelse($bookings as $booking)
+                    @php
+                        // Normalize the cleaning type and define prices
+                        $type = strtolower(trim($booking->type_of_cleaning));
+                        $prices = [
+                            'standard' => 800,
+                            'deep cleaning' => 1500,
+                            'move-in/move-out' => 2500,
+                        ];
+                        // Get the price or default to 0
+                        $price = $prices[$type] ?? 0;
+
+                        // Get last audit action
+                        $lastAudit = $booking->audits->last();
+                        $action = $lastAudit ? ucfirst($lastAudit->event) : 'No activity recorded';
+                        $timestamp = $lastAudit ? \Carbon\Carbon::parse($lastAudit->created_at)->format('M d, Y h:i A') : '';
+                    @endphp
                     <tr class="hover:bg-gray-50">
                         <td class="border px-4 py-2">
-                            @if($booking->audits->isNotEmpty())
-                                @php
-                                    $lastAudit = $booking->audits->last();
-                                    $action = ucfirst($lastAudit->event);
-                                    $timestamp = \Carbon\Carbon::parse($lastAudit->created_at)->format('M d, Y h:i A');
-                                @endphp
-                                {{ $action }} on {{ $timestamp }}
-                            @else
-                                No activity recorded
-                            @endif
+                            {{ $action }} @if($timestamp) on {{ $timestamp }} @endif
                         </td>
                         <td class="border px-4 py-2">{{ $booking->name }}</td>
                         <td class="border px-4 py-2">{{ $booking->address }}</td>
                         <td class="border px-4 py-2">{{ $booking->email }}</td>
-                        <td class="border px-4 py-2">{{ $booking->type_of_cleaning }}</td>
+                        <td class="border px-4 py-2">{{ ucfirst($booking->type_of_cleaning) }}</td>
+                        <td class="border px-4 py-2">₱{{ number_format($price, 2) }}</td> <!-- Display price -->
                         <td class="border px-4 py-2">{{ \Carbon\Carbon::parse($booking->date)->format('M d, Y') }}</td>
                         <td class="border px-4 py-2">{{ \Carbon\Carbon::parse($booking->time)->format('h:i A') }}</td>
                         <td class="border px-4 py-2">{{ $booking->payment_method }}</td>
@@ -49,7 +58,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="border px-4 py-4 text-center text-gray-500">
+                        <td colspan="10" class="border px-4 py-4 text-center text-gray-500">
                             No records found.
                         </td>
                     </tr>
@@ -57,9 +66,11 @@
             </tbody>
         </table>
     </div>
+
     <a href="{{ route('download.report') }}" class="bg-blue-500 text-black px-6 py-2 rounded-lg shadow hover:bg-blue-600">
         Download Report
     </a>
+
     <div class="mt-6 text-sm text-right text-black-500">
         Total Records: {{ $bookings->count() }}
     </div>
