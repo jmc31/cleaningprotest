@@ -1,14 +1,20 @@
-
 <div class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md">
-    <h2 class="text-2xl font-semibold mb-4">My Bookings</h2>
-    <table class="w-full table-auto border">
-        <thead>
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-semibold">My Bookings</h2>
+        <a href="{{ route('generate.report') }}" class="bg-blue-500 text- px-6 py-2 rounded-lg shadow hover:bg-blue-600">
+            View Full Report
+        </a>
+    </div>
+
+    <table class="w-full table-auto border border-gray-300 rounded-lg shadow-md">
+        <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
             <tr>
                 <th class="border p-2">Name</th>
+                <th class="border p-2">Address</th>
                 <th class="border p-2">Email</th>
                 <th class="border p-2">Type of Cleaning</th>
-                <th class="border p-2">Date</th>
-                <th class="border p-2">Time</th>
+                <th class="border p-2">Book Date</th>
+                <th class="border p-2">Book Time</th>
                 <th class="border p-2">Payment Method</th>
                 <th class="border p-2">Status</th>
                 <th class="border p-2">Actions</th>
@@ -16,8 +22,9 @@
         </thead>
         <tbody>
             @foreach($bookings as $booking)
-            <tr>
+            <tr class="hover:bg-gray-50">
                 <td class="border p-2">{{ $booking->name }}</td>
+                <td class="border p-2">{{ $booking->address }}</td>
                 <td class="border p-2">{{ $booking->email }}</td>
                 <td class="border p-2">{{ $booking->type_of_cleaning }}</td>
                 <td class="border p-2">{{ $booking->date }}</td>
@@ -29,10 +36,12 @@
                     </span>
                 </td>
                 <td class="border p-2 space-x-2">
-                    <a href="{{ route('booking.edit', $booking->id) }}" class="text-blue-500 hover:underline">Edit</a>
+                    @if($booking->status != 'paid')
+                        <a href="{{ route('booking.edit', $booking->id) }}" class="text-blue-500 hover:underline">Edit</a>
+                    @endif
                     <button wire:click="cancel({{ $booking->id }})" class="text-red-500 hover:underline">Cancel</button>
                     @if($booking->status == 'pending')
-                    <a href="{{ route('booking.payment', $booking->id) }}" class="text-green-600 hover:underline">Pay</a>
+                        <a href="{{ route('booking.payment', $booking->id) }}" class="text-green-600 hover:underline">Pay</a>
                     @endif
                 </td>
             </tr>

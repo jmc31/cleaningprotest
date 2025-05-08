@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\{BookingCreate, BookingEdit, BookingView, BookingPayment};
-
+use App\Livewire\GenerateReport;
+use App\Http\Controllers\BookingController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,5 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+Route::get('/download-report', [BookingController::class, 'downloadReport'])->name('download.report');
+
+Route::get('/generate-report', GenerateReport::class)->name('generate.report');
 
 require __DIR__.'/auth.php';
