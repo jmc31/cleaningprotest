@@ -9,7 +9,7 @@ use Livewire\Attributes\Layout;
 class BookingCreate extends Component
 {
     #[Layout('layouts.app')]
-    public $name, $email, $address, $type_of_cleaning, $date, $time;
+    public $name, $email, $address, $type_of_cleaning, $date, $time, $payment_method;
 
     protected $rules = [
         'name' => 'required|string|max:255',
@@ -17,7 +17,8 @@ class BookingCreate extends Component
         'address' => 'required|string',
         'type_of_cleaning' => 'required|string',
         'date' => 'required|date|after_or_equal:today',
-        'time' => 'required'
+        'time' => 'required',
+        'payment_method' => 'required'
     ];
 
     public function createBooking()
@@ -31,6 +32,7 @@ class BookingCreate extends Component
             'type_of_cleaning' => $this->type_of_cleaning,
             'date' => $this->date,
             'time' => $this->time,
+            'payment_method' => $this->payment_method,
         ]);
 
         session()->flash('message', 'Booking created successfully.');

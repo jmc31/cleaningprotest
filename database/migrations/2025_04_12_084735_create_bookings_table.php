@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('type_of_cleaning');
             $table->date('date');
             $table->time('time');
+            $table->string('payment_method');
             $table->enum('status', ['pending', 'paid'])->default('pending');
             $table->timestamps();
         });

@@ -9,6 +9,7 @@
                 <th class="border p-2">Type of Cleaning</th>
                 <th class="border p-2">Date</th>
                 <th class="border p-2">Time</th>
+                <th class="border p-2">Payment Method</th>
                 <th class="border p-2">Status</th>
                 <th class="border p-2">Actions</th>
             </tr>
@@ -21,6 +22,7 @@
                 <td class="border p-2">{{ $booking->type_of_cleaning }}</td>
                 <td class="border p-2">{{ $booking->date }}</td>
                 <td class="border p-2">{{ $booking->time }}</td>
+                <td class="border p-2">{{ $booking->payment_method }}</td>
                 <td class="border p-2">
                     <span class="{{ $booking->status == 'paid' ? 'text-green-600' : 'text-yellow-600' }}">
                         {{ ucfirst($booking->status) }}

@@ -15,6 +15,13 @@
             <input type="date" wire:model="date" class="w-full border rounded p-2" required>
             <input type="time" wire:model="time" class="w-full border rounded p-2" required>
 
+            <select wire:model="payment_method" class="w-full border rounded p-2" required>
+                <option value="">-- Select Payment Method --</option>
+                <option value="cash">Cash</option>
+                <option value="gcash">GCash</option>
+                <option value="paypal">PayPal</option>
+            </select>
+
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                 Book Now
             </button>
